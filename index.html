@@ -1,71 +1,192 @@
+<!DOCTYPE html>
 <html>
-    <head>
-       <title>Ejemplo LocalStorage</title>
-       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">   </script>
-       <script type="text/javascript">
-       /*Funcion de Capturar, Almacenar datos y Limpiar campos*/
-      $(document).ready(function(){
-          $('#boton-guardar').click(function(){
-              /*Captura de datos escrito en los inputs*/
-              var nom = document.getElementById("nombretxt").value;
-              var apel = document.getElementById("apellidotxt").value;
-              var date= document.getElementById("datetime").value;
-              var textAr= document.getElementById("textAr").value;
-              /*Guardando los datos en el LocalStorage*/
-              localStorage.setItem("Nombre", nom);
-              localStorage.setItem("Apellido", apel);
-              localStorage.setItem("Fecha", date);
-              localStorage.setItem("AreaTxt", textAr);
-              /*Limpiando los campos o inputs*/
-              document.getElementById("nombretxt").value = "";
-              document.getElementById("apellidotxt").value = "";
-              document.getElementById("datetime").value = "";
-              document.getElementById("textAr").value = "";
-          });
-      });
 
-      /*Funcion Cargar y Mostrar datos*/
-      $(document).ready(function(){
-          $('#boton-cargar').click(function(){
-              /*Obtener datos almacenados*/
-              var nombre = localStorage.getItem("Nombre");
-              var apellido = localStorage.getItem("Apellido");
-              var fecha = localStorage.getItem("Fecha");
-              var desc = localStorage.getItem("AreaTxt");
 
-              /*Mostrar datos almacenados*/
-              document.getElementById("nombre").innerHTML = nombre;
-              document.getElementById("apellido").innerHTML = apellido;
-              document.getElementById("datet").innerHTML = fecha;
-              document.getElementById("desc").innerHTML = desc;
-          });
-      });
-      </script>
-    </head>
-  <body>
-    <center><h1>Ejemplo - localStorage</h1>
 
-    <input type="text" placeholder="Nombre" id="nombretxt"><br><br>
-    <input type="text" placeholder="Apellido" id="apellidotxt"><br><br>
-    <input type="date" id="datetime"><br><br>
-    <input type="text" id="textAr"><br><br>
 
-    <button id="boton-guardar">Guardar</button><br>
 
-    <hr />
-    <label>Nombre Almacenado:</label>
-    <label type="text" id="nombre"></label><br>
 
-    <label>Apellido almacenado:</label>
-    <label type="text" id="apellido"></label><br>
 
-    <label id="datet"></label><br>
-    <label id="desc"></label><br>
+<script>
+const text = '[ "Idea1", "Idea2", "Idea3", "Idea4", "Idea5", "Idea6", "Idea7", "Idea8", "Idea9", "Idea10"]';
+const myArr = JSON.parse(text);
 
-    <button id="boton-cargar">Cargar elementos</button>
-    </center>
 
-    <hr/>
+const comentarios = '["comentario1","comentario2","comentario3","comentario4","comentario5","comentario6","comentario7","comentario8","comentario9","comentario10"]';
 
-    </body>
+const comentariosArray = JSON.parse(comentarios);
+
+var counter = 0;
+document.getElementById("coches").innerHTML = myArr[0];
+
+
+
+/* Contador ascendente*/
+
+function clickCounter()
+{
+if(counter<9)
+counter++;
+document.getElementById("contador").innerHTML =counter;
+document.getElementById("coches").innerHTML = myArr[counter];
+printInfo();
+}
+
+
+function clickCounterDown()
+{
+if(counter>0)
+counter--;
+document.getElementById("contador").innerHTML =counter;
+document.getElementById("coches").innerHTML = myArr[counter];
+printInfo();
+
+}
+
+
+
+function saveInfo()
+{
+    var contadorGuardar = counter;
+        localStorage.setItem("cuentaStore",contadorGuardar);
+
+    var nombreGuardar = document.getElementById("nombre").value;
+        localStorage.setItem("nombreStore",nombreGuardar);
+
+var cajacomentariosGuardar = document.getElementById("cajacomentario").value;
+        localStorage.setItem("cajaComentarioStore",cajacomentariosGuardar);
+
+    
+
+
+    var cocheGuardar=JSON.parse(text);
+    localStorage.setItem("cocheStore",JSON.stringify(cocheGuardar));
+
+// var comentarioIndividual =  document.getElementById("mensaje").value;
+// localStorage.setItem("comentarioStore",comentarioIndividual);
+
+var comentarioArrayGuardar = JSON.parse(comentarios);
+localStorage.setItem("comentarioArrayStore",JSON.stringify(comentarioArrayGuardar));
+
+
+
+
+var ideaGuardar = document.getElementById("idea").value;
+localStorage.setItem("ideaStore", ideaGuardar);
+
+
+
+
+}
+
+
+function printInfo()
+{
+
+
+  
+var nombreImprimir = localStorage.getItem("nombreStore");
+var contadorImprimir = localStorage.getItem("cuentaStore");
+
+var cocheImprimir = localStorage.getItem('cocheStore');
+cocheImprimir = JSON.parse(cocheImprimir);
+
+
+var comentariosArrayImprimir = localStorage.getItem('comentarioArrayStore');
+comentariosArrayImprimir = JSON.parse(comentariosArrayImprimir);
+
+ //var contadorImprimir=localStorage.getItem('comentarioStore');
+ //comentarioImprimir = JSON.parse(comentarioImprimir);
+
+var cajaComentarioImprimir = localStorage.getItem('cajaComentarioStore');
+//comentarioImprimir = JSON.parse(comentarioImprimir);
+
+var ideaImprimir = localStorage.getItem('ideaStore');
+
+
+
+
+//document.getElementById("printCuenta").innerHTML = contadorImprimir;
+document.getElementById("printNombre").innerHTML = nombreImprimir;
+document.getElementById("printCoche").innerHTML = cocheImprimir[counter];
+document.getElementById("printArregloComentario").innerHTML = comentariosArrayImprimir[counter];
+document.getElementById("printIdea").innerHTML = ideaImprimir;
+document.getElementById("printComentario").innerHTML = cajaComentarioImprimir;
+
+
+
+
+
+}
+
+
+
+</script>
+
+<body>
+
+
+
+
+<input type="text" placeholder="Idea Principal" id="nombre"><br><br>
+
+
+<textarea  id="cajacomentario" placeholder="Escribe tu nota"  rows="10" cols="30" >
+</textarea><br><br>
+
+
+
+<button onclick="saveInfo()" type="button" style="color: white; background-color:#5692c7; border-color: white;">Guardar</button>
+<button onclick="printInfo()" type="button" style="color: white; background-color:#5692c7; border-color: white;">Imprimir</button>
+
+
+
+
+
+
+<hr/>
+<label>Idea guardada </label><br>
+<label id="printCoche">--No de Idea--</label><br><br>
+
+<label>Comentario:</label><br>
+<label id="printArregloComentario">--Coment--</label><br>
+
+
+
+
+<!-- <p id="printCoche">coche Guardado</p> -->
+<br>
+<!-- <label id="printCuenta">CuentaLabel</label><br> -->
+
+
+
+<label id="printIdea"></label><br>
+<label id="comenta"></label>
+<label id="printArreglo"></label><br>
+<p id="printCuenta">  </p>
+
+
+<label>Nombre:</label><br>
+<label id="printNombre">----</label><br>
+
+<label>Comentario de la caja:</label><br>
+<label id="printComentario">--Comentario de la Caja--</label><br>
+
+<hr/>
+<button onclick="clickCounterDown()" type="button" style="color: white; background-color:#5692c7; border-color: white;">Anterior</button>
+<button onclick="clickCounter()" type="button" style="color: white; background-color:#5692c7; border-color: white;">Siguiente</button>
+
+<p id="coches"></p>
+<p id="contador"></p>
+
+
+</body>
 </html>
+
+
+
+<!-- 
+localStorage.setItem("data", JSON.stringify(data));
+
+//...
+var data = JSON.parse(localStorage.getItem("data")); -->
