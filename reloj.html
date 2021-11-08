@@ -1,0 +1,41 @@
+<html>
+    <head>
+       <title>Ejemplo LocalStorage</title>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">   </script>
+       <script type="text/javascript">
+       
+
+
+
+
+
+
+      </script>
+    </head>
+  <body>
+
+
+
+
+
+   
+<p id="hora"></p>
+
+<script>
+function addZero(i) {
+  if (i < 10) {i = "0" + i}
+  return i;
+}
+
+const d = new Date();
+let h = addZero(d.getHours());
+let m = addZero(d.getMinutes());
+let s = addZero(d.getSeconds());
+let time = h + ":" + m ;
+document.getElementById("hora").innerHTML = time;
+</script>
+
+
+
+    
+</html>
